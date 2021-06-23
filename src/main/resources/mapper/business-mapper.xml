@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.upc.huiwan.dao.BusinessMapper">
+
+    <sql id="selectFields">
+        id,username,password,shopname,script_nums,phone,email,address,grade,type,status,header_url,create_time,privileges
+    </sql>
+
+    <sql id="insertFields">
+        id,username,password,shopname,script_nums,phone,email,address,grade,type,status,header_url,create_time,privileges
+    </sql>
+
+
+    <select id="selectByName" resultType="Business">
+        select <include refid="selectFields"></include>
+        from business
+        where username = #{username} and password=#{password}
+    </select>
+
+</mapper>

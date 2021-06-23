@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.upc.huiwan.dao.ScriptMapper">
+    <sql id="selectFields">
+        id,name,numbers,status,grade,price,belong_businessId,synopsis,create_time,picture_url
+    </sql>
+
+    <sql id="insertFields">
+        name,numbers,status,grade,price,belong_businessId,synopsis,create_time,picture_url
+    </sql>
+
+    <select id="selectScriptByName" resultType="Script">
+        select <include refid="selectFields"></include>
+        from script
+        where name=#{name};
+    </select>
+
+    <select id="selectScripts" resultType="Script">
+        select <include refid="selectFields"></include>
+        from script
+        where status!=2
+        <if test="belongBusinessId!=0">
+            and belong_businessId = #{belongBusinessId}
+        </if>
+        order by status desc, create_time desc
+        limit #{offset},#{limit}
+    </select>
+
+    <insert id="insertScript" parameterType="Script">
+        insert into script(<include refid="insertFields"></include>)
+        values (#{name},#{numbers},#{status},#{grade},#{price},#{belongBusinessId},#{synopsis},#{createTime})
+    </insert>
+
+    <select id="selectScriptById" resultType="Script">
+        select <include refid="selectFields"></include>
+        from script
+        where id = #{id}
+    </select>
+</mapper>
